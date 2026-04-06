@@ -2,9 +2,9 @@ import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 
 const contacts = [
-  { icon: 'MapPin', label: 'Адрес', value: 'Москва, ул. Новинский бульвар, 8' },
-  { icon: 'Phone', label: 'Телефон', value: '+7 (495) 123-45-67' },
-  { icon: 'Mail', label: 'Email', value: 'hello@buildlab.ru' },
+  { icon: 'MapPin', label: 'Адрес', value: 'г. Архангельск' },
+  { icon: 'Phone', label: 'Телефон', value: '+7 (921) 490-01-25' },
+  { icon: 'Mail', label: 'Email', value: 'dmitrylazarev2010@icloud.com' },
   { icon: 'Clock', label: 'Режим работы', value: 'Пн–Пт: 9:00–19:00' },
 ];
 
@@ -48,11 +48,7 @@ export default function ContactsPage() {
               ))}
             </div>
 
-            <div className="mt-10 p-8 bg-foreground text-background">
-              <div className="font-mono-custom text-xs tracking-[0.2em] uppercase opacity-50 mb-4">Telegram</div>
-              <p className="font-bold text-xl mb-2">@buildlab_support</p>
-              <p className="text-sm opacity-60">Отвечаем в течение 30 минут</p>
-            </div>
+
           </div>
 
           {/* Right — form */}

@@ -29,19 +29,16 @@ const presets = [
     label: 'Офисный',
     price: 'от 35 000 ₽',
     desc: 'Для работы с документами и видеозвонков',
-    tag: 'Популярный',
   },
   {
     label: 'Игровой',
     price: 'от 90 000 ₽',
     desc: 'Для современных игр в Full HD / 2K',
-    tag: 'Топ продаж',
   },
   {
     label: 'Рабочая станция',
     price: 'от 180 000 ₽',
     desc: '3D, видеомонтаж, рендеринг и разработка',
-    tag: null,
   },
 ];
 
@@ -105,7 +102,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       <section className="border-t border-border bg-secondary">
         <div className="max-w-6xl mx-auto px-6 py-20">
           <div className="font-mono-custom text-xs tracking-[0.2em] text-muted-foreground uppercase mb-12">
-            Готовые сборки
+            Примеры сборок
           </div>
           <div className="grid md:grid-cols-3 gap-4">
             {presets.map((preset) => (
@@ -114,11 +111,6 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                 className="component-card bg-background p-8 cursor-pointer group"
                 onClick={() => onNavigate('configurator')}
               >
-                {preset.tag && (
-                  <div className="inline-block font-mono-custom text-xs tracking-widest uppercase px-2 py-0.5 bg-accent-orange text-white mb-4">
-                    {preset.tag}
-                  </div>
-                )}
                 <h3 className="text-2xl font-black mb-2">{preset.label}</h3>
                 <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{preset.desc}</p>
                 <div className="font-mono-custom font-medium text-lg">{preset.price}</div>
