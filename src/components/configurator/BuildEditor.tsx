@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import {
   Build, Component, componentCategories, catalog,
@@ -36,6 +37,12 @@ export default function BuildEditor({
 }: BuildEditorProps) {
   const activeBuild = builds[activeBuildIdx];
   const currentComponents = catalog[activeCategory] || [];
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  const toggleExpand = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setExpandedId(prev => prev === id ? null : id);
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-8">
@@ -91,7 +98,7 @@ export default function BuildEditor({
             return (
               <button
                 key={cat.id}
-                onClick={() => onSelectCategory(cat.id)}
+                onClick={() => { onSelectCategory(cat.id); setExpandedId(null); }}
                 className={`w-full flex items-center justify-between px-4 py-3 text-left text-sm transition-all border ${activeCategory === cat.id ? 'border-foreground bg-foreground text-background' : 'border-transparent hover:border-border'}`}
               >
                 <div className="flex items-center gap-3">
@@ -147,41 +154,73 @@ export default function BuildEditor({
           <div className="space-y-2">
             {currentComponents.map((comp) => {
               const isSelected = activeBuild.components[activeCategory]?.id === comp.id;
+              const isExpanded = expandedId === comp.id;
+
               return (
                 <div
                   key={comp.id}
                   onClick={() => onSelectComponent(comp)}
-                  className={`component-card p-4 cursor-pointer flex items-center gap-4 ${isSelected ? 'selected' : 'bg-background'}`}
+                  className={`component-card cursor-pointer ${isSelected ? 'selected' : 'bg-background'}`}
                 >
-                  <ComponentImage src={comp.image} alt={comp.name} categoryId={activeCategory} />
+                  {/* Main row */}
+                  <div className="p-4 flex items-center gap-4">
+                    <ComponentImage src={comp.image} alt={comp.name} categoryId={activeCategory} />
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <span className="font-bold text-sm">{comp.name}</span>
-                      <span className={`font-mono-custom text-xs px-1.5 py-0.5 border ${tierColors[comp.tier]}`}>
-                        {tierLabels[comp.tier]}
-                      </span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        <span className="font-bold text-sm">{comp.name}</span>
+                        <span className={`font-mono-custom text-xs px-1.5 py-0.5 border ${tierColors[comp.tier]}`}>
+                          {tierLabels[comp.tier]}
+                        </span>
+                      </div>
+                      <div className="text-xs text-muted-foreground mb-1">{comp.brand} · {comp.specs}</div>
+                      <div className="text-xs text-accent-orange font-medium">
+                        {comp.forWhom}
+                      </div>
                     </div>
-                    <div className="text-xs text-muted-foreground">{comp.brand} · {comp.specs}</div>
-                  </div>
 
-                  <div className="flex items-center gap-4 flex-shrink-0">
-                    <div className="text-right">
-                      <div className="font-mono-custom font-bold text-base">{formatPrice(comp.price)}</div>
-                      <a
-                        href={comp.buyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-accent-orange hover:underline font-mono-custom flex items-center gap-0.5 justify-end mt-0.5"
-                        onClick={e => e.stopPropagation()}
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <div className="text-right">
+                        <div className="font-mono-custom font-bold text-base">{formatPrice(comp.price)}</div>
+                        <a
+                          href={comp.buyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-accent-orange hover:underline font-mono-custom flex items-center gap-0.5 justify-end mt-0.5"
+                          onClick={e => e.stopPropagation()}
+                        >
+                          Купить в DNS <Icon name="ExternalLink" size={10} />
+                        </a>
+                      </div>
+                      <button
+                        className="p-1 text-muted-foreground hover:text-foreground transition-colors"
+                        onClick={e => toggleExpand(comp.id, e)}
+                        title="Подробные характеристики"
                       >
-                        Купить в DNS <Icon name="ExternalLink" size={10} />
-                      </a>
-                    </div>
-                    <div className={`w-5 h-5 border flex items-center justify-center flex-shrink-0 transition-colors ${isSelected ? 'bg-accent-orange border-accent-orange' : 'border-border'}`}>
-                      {isSelected && <Icon name="Check" size={11} className="text-white" />}
+                        <Icon name={isExpanded ? 'ChevronUp' : 'ChevronDown'} size={15} />
+                      </button>
+                      <div className={`w-5 h-5 border flex items-center justify-center flex-shrink-0 transition-colors ${isSelected ? 'bg-accent-orange border-accent-orange' : 'border-border'}`}>
+                        {isSelected && <Icon name="Check" size={11} className="text-white" />}
+                      </div>
                     </div>
                   </div>
+
+                  {/* Expanded details */}
+                  {isExpanded && (
+                    <div
+                      className="border-t border-border px-4 py-3 bg-secondary/50"
+                      onClick={e => e.stopPropagation()}
+                    >
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-2">
+                        {comp.details.map(d => (
+                          <div key={d.label}>
+                            <div className="font-mono-custom text-xs text-muted-foreground uppercase tracking-wider">{d.label}</div>
+                            <div className="text-sm font-medium mt-0.5">{d.value}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })}

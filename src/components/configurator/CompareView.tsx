@@ -20,7 +20,7 @@ export default function CompareView({ builds, onEditBuild }: CompareViewProps) {
             <tr className="border-b border-border">
               <th className="text-left py-4 pr-6 text-sm font-medium text-muted-foreground w-40">Компонент</th>
               {builds.map((b) => (
-                <th key={b.id} className="text-left py-4 px-4 min-w-52">
+                <th key={b.id} className="text-left py-4 px-4 min-w-60">
                   <div className="font-bold text-base">{b.name}</div>
                   <div className="font-mono-custom text-sm text-accent-orange font-medium mt-0.5">
                     {formatPrice(getBuildTotal(b))}
@@ -39,7 +39,7 @@ export default function CompareView({ builds, onEditBuild }: CompareViewProps) {
               const maxPrice = Math.max(...prices);
 
               return (
-                <tr key={cat.id} className="border-b border-border last:border-0">
+                <tr key={cat.id} className="border-b border-border last:border-0 align-top">
                   <td className="py-4 pr-6">
                     <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                       <Icon name={cat.icon} fallback="Cpu" size={14} />
@@ -52,21 +52,39 @@ export default function CompareView({ builds, onEditBuild }: CompareViewProps) {
                       className={`py-4 px-4 ${comp?.price === maxPrice && maxPrice > 0 ? 'comparison-highlight' : ''}`}
                     >
                       {comp ? (
-                        <div className="flex items-center gap-3">
-                          <ComponentImage src={comp.image} alt={comp.name} categoryId={cat.id} />
-                          <div>
-                            <div className="font-medium text-sm">{comp.name}</div>
-                            <div className="text-xs text-muted-foreground">{comp.brand}</div>
-                            <div className="font-mono-custom text-sm font-medium mt-1">{formatPrice(comp.price)}</div>
-                            <a
-                              href={comp.buyUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-xs text-accent-orange hover:underline font-mono-custom flex items-center gap-0.5 mt-0.5"
-                              onClick={e => e.stopPropagation()}
-                            >
-                              DNS <Icon name="ExternalLink" size={10} />
-                            </a>
+                        <div>
+                          <div className="flex items-center gap-3 mb-3">
+                            <ComponentImage src={comp.image} alt={comp.name} categoryId={cat.id} />
+                            <div>
+                              <div className="font-bold text-sm">{comp.name}</div>
+                              <div className="text-xs text-muted-foreground">{comp.brand}</div>
+                              <div className="font-mono-custom text-sm font-medium mt-1">{formatPrice(comp.price)}</div>
+                              <a
+                                href={comp.buyUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs text-accent-orange hover:underline font-mono-custom flex items-center gap-0.5 mt-0.5"
+                                onClick={e => e.stopPropagation()}
+                              >
+                                DNS <Icon name="ExternalLink" size={10} />
+                              </a>
+                            </div>
+                          </div>
+
+                          {/* Details grid */}
+                          <div className="space-y-1.5 mb-3">
+                            {comp.details.map(d => (
+                              <div key={d.label} className="flex justify-between gap-3 text-xs">
+                                <span className="text-muted-foreground font-mono-custom whitespace-nowrap">{d.label}</span>
+                                <span className="font-medium text-right">{d.value}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* For whom */}
+                          <div className="border-t border-border pt-2">
+                            <div className="font-mono-custom text-xs text-muted-foreground uppercase tracking-wider mb-1">Подходит для</div>
+                            <div className="text-xs text-accent-orange font-medium leading-relaxed">{comp.forWhom}</div>
                           </div>
                         </div>
                       ) : (
