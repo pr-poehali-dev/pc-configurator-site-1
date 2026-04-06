@@ -1,17 +1,3 @@
-const team = [
-  { name: 'Алексей Романов', role: 'Основатель / Hardware-инженер', years: 12 },
-  { name: 'Мария Соколова', role: 'UX-дизайнер', years: 7 },
-  { name: 'Дмитрий Козлов', role: 'Технический консультант', years: 9 },
-];
-
-const timeline = [
-  { year: '2018', event: 'Основание компании в Москве' },
-  { year: '2020', event: 'Запуск онлайн-конфигуратора' },
-  { year: '2022', event: '5 000 собранных ПК' },
-  { year: '2024', event: 'Открытие второго офиса в Санкт-Петербурге' },
-  { year: '2026', event: 'Новая платформа с AI-подбором компонентов' },
-];
-
 export default function AboutPage() {
   return (
     <div className="pt-16">
@@ -19,74 +5,97 @@ export default function AboutPage() {
       <div className="border-b border-border">
         <div className="max-w-6xl mx-auto px-6 py-20">
           <div className="font-mono-custom text-xs tracking-[0.2em] text-muted-foreground uppercase mb-4">
-            О компании
+            О проекте
           </div>
           <div className="grid md:grid-cols-2 gap-12 items-end">
             <h1 className="text-5xl font-black leading-tight">
-              Собираем ПК<br />с 2018 года
+              Мы только<br />начинаем
             </h1>
             <p className="text-base text-muted-foreground leading-relaxed">
-              BUILDLAB — это команда инженеров и энтузиастов, которые помогают находить
-              оптимальные конфигурации для любых задач и бюджетов. Мы верим, что каждый
-              заслуживает идеально подобранный компьютер.
+              BUILDLAB — это новый проект для тех, кто хочет собрать компьютер без лишней
+              головной боли. Никаких запутанных форумов — просто выбирай компоненты,
+              сравнивай сборки и получай готовый результат.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="border-b border-border">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-border">
-            {[
-              { num: '8 лет', label: 'Опыта' },
-              { num: '12 000+', label: 'Сборок' },
-              { num: '500+', label: 'Компонентов' },
-              { num: '98%', label: 'Довольных клиентов' },
-            ].map(s => (
-              <div key={s.label} className="py-10 px-6 first:pl-0">
-                <div className="text-3xl font-black mb-1">{s.num}</div>
-                <div className="text-sm text-muted-foreground font-mono-custom">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Timeline */}
+      {/* Mission */}
       <div className="border-b border-border">
         <div className="max-w-6xl mx-auto px-6 py-16">
           <div className="font-mono-custom text-xs tracking-[0.2em] text-muted-foreground uppercase mb-10">
-            История
+            Миссия
           </div>
-          <div className="space-y-0">
-            {timeline.map((item, i) => (
-              <div key={item.year} className="flex gap-8 items-start border-t border-border py-6 last:border-b">
-                <div className="font-mono-custom font-medium text-sm text-muted-foreground w-12 flex-shrink-0 pt-0.5">
-                  {item.year}
-                </div>
-                <div className="font-medium text-base">{item.event}</div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: 'Просто',
+                desc: 'Подбор комплектующих без технических знаний. Интуитивный интерфейс для любого пользователя.',
+              },
+              {
+                title: 'Честно',
+                desc: 'Реальные цены, актуальные данные и прямые ссылки на проверенные магазины.',
+              },
+              {
+                title: 'Свободно',
+                desc: 'Никакой регистрации и скрытых условий. Конфигуратор работает сразу — без ограничений.',
+              },
+            ].map((item) => (
+              <div key={item.title} className="border-t-2 border-accent-orange pt-6">
+                <h3 className="text-2xl font-black mb-3">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Team */}
+      {/* Founder */}
+      <div className="border-b border-border">
+        <div className="max-w-6xl mx-auto px-6 py-16">
+          <div className="font-mono-custom text-xs tracking-[0.2em] text-muted-foreground uppercase mb-10">
+            Основатель
+          </div>
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div className="border border-border p-8 group hover:border-foreground transition-colors max-w-sm">
+              <div className="w-14 h-14 bg-secondary flex items-center justify-center font-black text-xl mb-6 group-hover:bg-accent-orange group-hover:text-white transition-colors">
+                Д
+              </div>
+              <h3 className="font-bold text-xl mb-1">Дмитрий Лазарев</h3>
+              <p className="text-sm text-muted-foreground">Основатель BUILDLAB</p>
+            </div>
+            <div className="pt-2">
+              <p className="text-base text-muted-foreground leading-relaxed mb-6">
+                Идея BUILDLAB появилась из личного опыта — каждый раз при сборке ПК приходилось
+                часами изучать форумы, сравнивать характеристики и проверять совместимость.
+                Я решил сделать инструмент, который упростит этот процесс для всех.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Сейчас проект только запускается. Я открыт к любым вопросам и предложениям —
+                пишите в раздел «Контакты».
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* What's next */}
       <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="font-mono-custom text-xs tracking-[0.2em] text-muted-foreground uppercase mb-10">
-          Команда
+          Что планируем
         </div>
-        <div className="grid md:grid-cols-3 gap-4">
-          {team.map((member) => (
-            <div key={member.name} className="border border-border p-8 group hover:border-foreground transition-colors">
-              <div className="w-12 h-12 bg-secondary flex items-center justify-center font-black text-lg mb-6 group-hover:bg-accent-orange group-hover:text-white transition-colors">
-                {member.name[0]}
-              </div>
-              <h3 className="font-bold text-lg mb-1">{member.name}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{member.role}</p>
-              <div className="font-mono-custom text-xs text-muted-foreground">
-                {member.years} лет опыта
+        <div className="space-y-0">
+          {[
+            { label: 'Расширение каталога', desc: 'Больше компонентов и актуальные цены из нескольких магазинов' },
+            { label: 'Проверка совместимости', desc: 'Автоматическое предупреждение о несовместимых комплектующих' },
+            { label: 'Готовые сборки по задачам', desc: 'Подборки для игр, работы, видеомонтажа и разработки' },
+            { label: 'Сохранение конфигураций', desc: 'Возможность сохранить и поделиться своей сборкой по ссылке' },
+          ].map((item) => (
+            <div key={item.label} className="flex gap-8 items-start border-t border-border py-6 last:border-b">
+              <div className="w-1.5 h-1.5 rounded-full bg-accent-orange mt-2.5 flex-shrink-0" />
+              <div>
+                <div className="font-bold text-base mb-1">{item.label}</div>
+                <div className="text-sm text-muted-foreground">{item.desc}</div>
               </div>
             </div>
           ))}
