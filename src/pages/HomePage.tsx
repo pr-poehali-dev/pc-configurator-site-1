@@ -79,18 +79,6 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </div>
         </div>
 
-        <div className="mt-20 grid grid-cols-3 gap-px bg-border border border-border animate-fade-in animate-stagger-5">
-          {[
-            { num: '500+', label: 'Компонентов' },
-            { num: '12 000+', label: 'Сборок создано' },
-            { num: '4.9', label: 'Средний рейтинг' },
-          ].map((stat) => (
-            <div key={stat.label} className="bg-background px-6 py-8">
-              <div className="text-3xl font-black mb-1">{stat.num}</div>
-              <div className="text-sm text-muted-foreground font-mono-custom">{stat.label}</div>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* Features */}
